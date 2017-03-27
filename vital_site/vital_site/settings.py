@@ -16,18 +16,18 @@ import ConfigParser
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-config = ConfigParser.ConfigParser()
-config.read("/home/rdj259/config.ini")
+#config = ConfigParser.ConfigParser()
+#config.read("/home/rdj259/config.ini")
 # config.read("/Users/richie/vital-work")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config.get("Security", "SECRET_KEY")
+SECRET_KEY = '2l862=+_hknqzj@dbb0qd7rfexzs3alg^ammg)f1v4!j_ysq+m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -36,12 +36,12 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'vital.apps.VitalConfig',
+    'admin_mod.apps.AdminModConfig',
     'captcha',
     'passwords',
     'session_security',
     'jquery',
     'django_crontab',
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -85,13 +85,20 @@ WSGI_APPLICATION = 'vital_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 DATABASES = {
+    #'default': {
+        #'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        #'NAME': config.get("Database", "VITAL_DB_NAME"),
+        #'USER': config.get("Database", "VITAL_DB_USER"),
+        #'PASSWORD': config.get("Database", "VITAL_DB_PWD"),
+        #'HOST': config.get("Database", "VITAL_DB_HOST"),
+        #'PORT': config.get("Database", "VITAL_DB_PORT"),
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config.get("Database", "VITAL_DB_NAME"),
-        'USER': config.get("Database", "VITAL_DB_USER"),
-        'PASSWORD': config.get("Database", "VITAL_DB_PWD"),
-        'HOST': config.get("Database", "VITAL_DB_HOST"),
-        'PORT': config.get("Database", "VITAL_DB_PORT"),
+        'NAME': 'vital_db',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
@@ -136,7 +143,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/rdj259/vital_static'
+#STATIC_ROOT = '/home/rdj259/vital_static'
+STATIC_ROOT = 'D:/Vital/virtual_lab/vital_site/vital/static'
 
 LOGGING = {
     'version': 1,
@@ -154,7 +162,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': '/var/log/vital/vital.log',
+            'filename': 'D:/Vital/virtual_lab/vital_site/vital.log',
             'maxBytes': 1024*1024*1, # 1 MB
             'backupCount': 15,
             'formatter': 'verbose'
@@ -173,15 +181,19 @@ LOGGING = {
             'handlers': ['file', 'console'],
             'level': 'DEBUG',
         },
+        'admin_mod': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+        },
     }
 }
 
 EMAIL_USE_TLS = True
-EMAIL_HOST = config.get("Email", "VITAL_EMAIL_HOST")
-EMAIL_HOST_USER = config.get("Email", "VITAL_EMAIL_USER")
-EMAIL_HOST_PASSWORD = config.get("Email", "VITAL_EMAIL_PWD")
-EMAIL_PORT = config.get("Email", "VITAL_EMAIL_PORT")
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+#EMAIL_HOST = config.get("Email", "VITAL_EMAIL_HOST")
+#EMAIL_HOST_USER = config.get("Email", "VITAL_EMAIL_USER")
+#EMAIL_HOST_PASSWORD = config.get("Email", "VITAL_EMAIL_PWD")
+#EMAIL_PORT = config.get("Email", "VITAL_EMAIL_PORT")
+#DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 PASSWORD_MIN_LENGTH = 8
 PASSWORD_COMPLEXITY = {"UPPER":  1, "LOWER":  1, "DIGITS": 1}
