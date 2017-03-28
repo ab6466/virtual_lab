@@ -59,14 +59,14 @@ def register(request):
                     return render(request, 'vital/user_registration.html',
                                   {'form': form, 'error_message': error_message})
 
-                # logger.debug("Creating SFTP account")
-                # cmd = 'sudo /home/rdj259/vital2.0/source/virtual_lab/vital_site/scripts/sftp_account.sh create '+ \
-                #       user.sftp_account+' '+user.sftp_pass + ' > /home/rdj259/vital2.0/log/sftp.log'
-                # p = Popen(cmd.split(), stdout=PIPE, stderr=PIPE)
-                # out, err = p.communicate()
-                # if not p.returncode == 0:
-                #     raise Exception('ERROR : cannot register sftp account. \n Reason : %s' % err.rstrip())
-                # logger.debug("SFTP account created")
+                logger.debug("Creating SFTP account")
+                cmd = 'sudo /home/rdj259/vital2.0/source/virtual_lab/vital_site/scripts/sftp_account.sh create '+ \
+                      user.sftp_account+' '+user.sftp_pass + ' > /home/rdj259/vital2.0/log/sftp.log'
+                p = Popen(cmd.split(), stdout=PIPE, stderr=PIPE)
+                out, err = p.communicate()
+                if not p.returncode == 0:
+                    raise Exception('ERROR : cannot register sftp account. \n Reason : %s' % err.rstrip())
+                logger.debug("SFTP account created")
 
                 user.save()
 
